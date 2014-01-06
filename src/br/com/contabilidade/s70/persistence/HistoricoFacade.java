@@ -27,7 +27,7 @@ public interface HistoricoFacade {
 
 	}
 
-	public void create(final Historico s70t004);
+	public void save(final Historico s70t004);
 
 	public Historico get(Long long1);
 
