@@ -106,6 +106,6 @@ public class ValidateException extends Exception {
 	}
 
 	public Collection<String> getAllFieldsWarning() {
-		return this.getFields(this.erros);
+		return this.getFields(this.warnings);
 	}
 }

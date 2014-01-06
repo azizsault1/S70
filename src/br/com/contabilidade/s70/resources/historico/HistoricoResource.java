@@ -3,6 +3,7 @@ package br.com.contabilidade.s70.resources.historico;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +62,7 @@ public class HistoricoResource {
 	}
 
 	private List<Historico> todos() {
-		return this.facade.get();
+		return new LinkedList<>(this.facade.get());
 	}
 
 	@GET

@@ -86,6 +86,9 @@ public class HistoricoValidatorImplTest {
 				this.oneOf(HistoricoValidatorImplTest.this.historico).getDescricao();
 				this.will(returnValue("Teste"));
 
+				this.oneOf(HistoricoValidatorImplTest.this.historico).hasComplemento();
+				this.will(returnValue(HistoricoComplemento.SIM));
+
 			}
 		});
 
@@ -230,7 +233,7 @@ public class HistoricoValidatorImplTest {
 				this.will(returnValue(Long.valueOf(1)));
 
 				this.oneOf(HistoricoValidatorImplTest.this.historico).getDescricao();
-				this.will(returnValue(""));
+				this.will(returnValue("teste"));
 
 				this.oneOf(HistoricoValidatorImplTest.this.historico).hasComplemento();
 				this.will(returnValue(null));
@@ -256,5 +259,10 @@ public class HistoricoValidatorImplTest {
 		} catch (final Exception e) {
 			this.erroNaoEsperado(e);
 		}
+	}
+
+	@Test
+	public void TodosErrosPossiveis() {
+		Assert.fail("Não implementado.");
 	}
 }

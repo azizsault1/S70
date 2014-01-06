@@ -39,7 +39,7 @@ class HistoricoValidatorImpl implements HistoricoValidator {
 		}
 
 		if (historico.hasComplemento() == null) {
-			validator.addError(FIELD_COMPLEMENTO, FIELD_COMPLEMENTO);
+			validator.addError(FIELD_COMPLEMENTO, COMPL_INVALIDO);
 		}
 
 		if (validator.hasMessage()) {

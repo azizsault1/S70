@@ -1,34 +1,40 @@
 package br.com.contabilidade.s70.persistence.dao.historico;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
 
 import br.com.contabilidade.s70.persistence.beans.Historico;
-import br.com.contabilidade.s70.persistence.dao.DaoImp;
+import br.com.contabilidade.s70.persistence.dao.DefaultDao;
 
-class HistoricoDaoImpl extends DaoImp<Long, Historico, HistoricoImpl> implements HistoricoDao {
+class HistoricoDaoImpl implements HistoricoDao {
 
-	public HistoricoDaoImpl(final EntityManager em) {
-		super(em, HistoricoImpl.class);
+	private final DefaultDao<Long, HistoricoImpl> defaultDao;
+
+	public HistoricoDaoImpl(final DefaultDao<Long, HistoricoImpl> defaultDao) {
+		this.defaultDao = defaultDao;
 	}
 
 	@Override
-	public List<Historico> getAll() {
-		final List<HistoricoImpl> list = super.findAll();
-		return new LinkedList<Historico>(list);
+	public Collection<Historico> getAll() {
+		return Collections.unmodifiableCollection(new LinkedList<Historico>(this.defaultDao.findAll()));
 	}
 
 	@Override
-	protected HistoricoImpl interfaceParaImplementacao(final Historico e) {
-		return new HistoricoImpl(e.getId(), e.getDescricao(), e.hasComplemento().getBancoValue());
+	public void save(final Historico s70t004) {
+
+	}
+
+	@Override
+	public void delete(final Long idHistorico) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public Historico getById(final Long id) {
-		final Historico st = super.find(id);
-		return st;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

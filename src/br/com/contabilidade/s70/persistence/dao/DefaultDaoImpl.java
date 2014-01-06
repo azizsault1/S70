@@ -6,8 +6,13 @@ import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
+
+import org.eclipse.persistence.exceptions.DatabaseException;
+
+import br.com.contabilidade.s70.persistence.exception.ChaveDuplicadaExcpetion;
 
 public final class DefaultDaoImpl<Chave, Implementacao> implements DefaultDao<Chave, Implementacao> {
 
@@ -30,9 +35,23 @@ public final class DefaultDaoImpl<Chave, Implementacao> implements DefaultDao<Ch
 	 * @see br.com.contabilidade.s70.persistence.dao.DefaultDao#save(Implementacao)
 	 */
 	@Override
-	public final void save(final Implementacao entity) {
-		this.em.persist(entity);
-		this.em.flush();
+	public final void save(final Implementacao entity) throws ChaveDuplicadaExcpetion {
+		try {
+			this.em.persist(entity);
+			this.em.flush();
+
+		} catch (final PersistenceException e) {
+
+			if (e.getCause() instanceof DatabaseException) {
+				final DatabaseException dt = (DatabaseException) e.getCause();
+
+				if (dt.getDatabaseErrorCode() == 1062) {
+					throw new ChaveDuplicadaExcpetion(dt);
+				}
+			}
+
+			throw e;
+		}
 	}
 
 	@Override

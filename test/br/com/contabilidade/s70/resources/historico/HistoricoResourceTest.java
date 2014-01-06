@@ -20,7 +20,6 @@ import br.com.contabilidade.s70.bo.historico.HistoricoBo;
 import br.com.contabilidade.s70.persistence.beans.Historico.HistoricoComplemento;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException.TypeError;
-import br.com.contabilidade.s70.resources.historico.HistoricoResource.ConstResources;
 
 import com.sun.jersey.api.view.Viewable;
 
@@ -75,7 +74,7 @@ public class HistoricoResourceTest {
 
 			Assert.assertFalse(result.isEmpty());
 			Assert.assertEquals(1, result.size());
-			Assert.assertEquals("Histórico salvo com sucesso.", result.get(0));
+			Assert.assertEquals("Hist��rico salvo com sucesso.", result.get(0));
 
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -97,14 +96,14 @@ public class HistoricoResourceTest {
 				if (map.containsKey(chave)) {
 					return map.get(chave);
 				} else {
-					throw new IllegalArgumentException("O Map não tinha a chave: " + chave);
+					throw new IllegalArgumentException("O Map n��o tinha a chave: " + chave);
 				}
 			} else {
-				throw new IllegalArgumentException("Objeto não é um mapper é um: " + model);
+				throw new IllegalArgumentException("Objeto n��o �� um mapper �� um: " + model);
 			}
 
 		} else {
-			throw new IllegalArgumentException("Objeto não é um Vieable");
+			throw new IllegalArgumentException("Objeto n��o �� um Vieable");
 		}
 
 	}
@@ -123,9 +122,9 @@ public class HistoricoResourceTest {
 
 		try {
 			this.getMessage(response, ConstResources.ERRO);
-			Assert.fail("Não era para vir mensagem de erro.");
+			Assert.fail("N��o era para vir mensagem de erro.");
 		} catch (final IllegalArgumentException e) {
-			Assert.assertEquals("O Map não tinha a chave: " + ConstResources.ERRO, e.getMessage());
+			Assert.assertEquals("O Map n��o tinha a chave: " + ConstResources.ERRO, e.getMessage());
 		}
 	}
 
@@ -139,7 +138,7 @@ public class HistoricoResourceTest {
 				}
 			});
 		} catch (final PersistenceException e1) {
-			Assert.fail("Não era para dar erro aqui.");
+			Assert.fail("N��o era para dar erro aqui.");
 		}
 
 		final Response response = this.resource.get("1");
@@ -150,7 +149,7 @@ public class HistoricoResourceTest {
 		final List<String> erros = this.getMessage(response, ConstResources.ERRO);
 		Assert.assertNotNull(erros);
 		Assert.assertEquals(1, erros.size());
-		Assert.assertEquals("Não foi possível encontrar o Histórico procurado.", erros.get(0));
+		Assert.assertEquals("N��o foi poss��vel encontrar o Hist��rico procurado.", erros.get(0));
 	}
 
 	@Test
@@ -165,7 +164,7 @@ public class HistoricoResourceTest {
 				}
 			});
 		} catch (final PersistenceException e1) {
-			Assert.fail("Não era para dar erro aqui.");
+			Assert.fail("N��o era para dar erro aqui.");
 		}
 
 		final Response response = this.resource.get("1");

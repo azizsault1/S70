@@ -1,6 +1,6 @@
 package br.com.contabilidade.s70.persistence;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,12 +27,12 @@ public interface HistoricoFacade {
 
 	}
 
-	public void save(final Historico s70t004);
+	public abstract void save(final Historico s70t004);
 
-	public Historico get(Long long1);
+	public abstract void delete(Long idHistorico);
 
-	public List<Historico> get();
+	public abstract Collection<Historico> get();
 
-	public void delete(Long idHistorico);
+	public abstract Historico get(Long long1);
 
 }

@@ -1,6 +1,6 @@
 package br.com.contabilidade.s70.persistence;
 
-import java.util.List;
+import java.util.Collection;
 
 import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.dao.historico.HistoricoDao;
@@ -17,7 +17,7 @@ public class HistoricoFacadeImpl implements HistoricoFacade {
 	}
 
 	@Override
-	public void create(final Historico s70t004) {
+	public void save(final Historico s70t004) {
 		this.transactional.beginTransaction();
 		this.dao.save(s70t004);
 		this.transactional.commitAndCloseTransaction();
@@ -29,15 +29,14 @@ public class HistoricoFacadeImpl implements HistoricoFacade {
 	}
 
 	@Override
-	public List<Historico> get() {
+	public Collection<Historico> get() {
 		return this.dao.getAll();
 	}
 
 	@Override
 	public void delete(final Long idHistorico) {
 		this.transactional.beginTransaction();
-		final Historico historico = this.dao.getById(idHistorico);
-		this.dao.delete(historico);
+		this.dao.delete(idHistorico);
 		this.transactional.commitAndCloseTransaction();
 	}
 

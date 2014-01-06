@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.contabilidade.s70.persistence.exception.ChaveDuplicadaExcpetion;
-import br.com.contabilidade.s70.persistence.exception.PersistenceException;
 
 public interface DefaultDao<Chave, Implementacao> {
 
