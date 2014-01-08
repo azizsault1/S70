@@ -1,5 +1,6 @@
 package br.com.contabilidade.s70.persistence.dao.historico;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -354,7 +355,7 @@ public class HistoricoDaoImplTest {
 			this.dao.getById(Long.valueOf(1));
 
 		} catch (final PersistenceException e) {
-			Assert.assertEquals(TypeError.CONSULTA, e.getType());
+			Assert.assertEquals(TypeError.CONSULTA_VAZIA, e.getType());
 			Assert.assertEquals(HISTOFICO_CONULTA_VAZIA, e.getMessage());
 			Assert.assertNull(e.getCause());
 		} catch (final Exception e) {
@@ -506,7 +507,7 @@ public class HistoricoDaoImplTest {
 				}
 			});
 
-			final List<Historico> historicos = this.dao.getAll();
+			final Collection<Historico> historicos = this.dao.getAll();
 			Assert.assertEquals(10, historicos.size());
 
 		} catch (final Exception e) {

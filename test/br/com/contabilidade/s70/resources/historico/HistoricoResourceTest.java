@@ -1,7 +1,7 @@
 package br.com.contabilidade.s70.resources.historico;
 
-import static org.junit.Assert.fail;
-
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +17,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.contabilidade.s70.bo.historico.HistoricoBo;
+import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.beans.Historico.HistoricoComplemento;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException.TypeError;
+import br.com.contabilidade.s70.resources.historico.HistoricoResource.ConstResources;
 
 import com.sun.jersey.api.view.Viewable;
 
@@ -56,6 +58,17 @@ public class HistoricoResourceTest {
 		return historico;
 	}
 
+	private Collection<Historico> createList(final int quantidade, final HistoricoComplemento complemento) {
+
+		final Collection<Historico> historicos = new LinkedList<>();
+
+		for (int j = 1; j <= quantidade; j++) {
+			historicos.add(this.create(j, complemento));
+		}
+
+		return historicos;
+	}
+
 	@Test
 	public void testSave() {
 		try {
@@ -63,7 +76,7 @@ public class HistoricoResourceTest {
 
 			this.ctx.checking(new Expectations() {
 				{
-					this.oneOf(HistoricoResourceTest.this.facade).save(historico);
+					this.oneOf(HistoricoResourceTest.this.bo).save(historico);
 				}
 			});
 
@@ -74,7 +87,7 @@ public class HistoricoResourceTest {
 
 			Assert.assertFalse(result.isEmpty());
 			Assert.assertEquals(1, result.size());
-			Assert.assertEquals("Hist��rico salvo com sucesso.", result.get(0));
+			Assert.assertEquals("Histórico salvo com sucesso.", result.get(0));
 
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -82,7 +95,7 @@ public class HistoricoResourceTest {
 		}
 	}
 
-	private Object getObject(final Response response, final String chave) {
+	private Object getObject(final Response response, final ConstResources chave) {
 		final Object responseObject = response.getEntity();
 
 		if (responseObject instanceof Viewable) {
@@ -93,23 +106,23 @@ public class HistoricoResourceTest {
 				@SuppressWarnings("unchecked")
 				final Map<String, List<String>> map = (Map<String, List<String>>) model;
 
-				if (map.containsKey(chave)) {
-					return map.get(chave);
+				if (map.containsKey(chave.name())) {
+					return map.get(chave.name());
 				} else {
-					throw new IllegalArgumentException("O Map n��o tinha a chave: " + chave);
+					throw new IllegalArgumentException("O Map não tinha a chave: " + chave);
 				}
 			} else {
-				throw new IllegalArgumentException("Objeto n��o �� um mapper �� um: " + model);
+				throw new IllegalArgumentException("Objeto não é um mapper é um: " + model);
 			}
 
 		} else {
-			throw new IllegalArgumentException("Objeto n��o �� um Vieable");
+			throw new IllegalArgumentException("Objeto não é um Vieable");
 		}
 
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<String> getMessage(final Response response, final String chave) {
+	private List<String> getMessage(final Response response, final ConstResources chave) {
 		return (List<String>) this.getObject(response, chave);
 	}
 
@@ -117,14 +130,14 @@ public class HistoricoResourceTest {
 	public void testGetNull() {
 		final Response response = this.resource.get(null);
 
-		final Object historico = this.getObject(response, "historico");
+		final Object historico = this.getObject(response, ConstResources.HISTORICO);
 		Assert.assertNotNull(historico);
 
 		try {
 			this.getMessage(response, ConstResources.ERRO);
-			Assert.fail("N��o era para vir mensagem de erro.");
+			Assert.fail("Não era para vir mensagem de erro.");
 		} catch (final IllegalArgumentException e) {
-			Assert.assertEquals("O Map n��o tinha a chave: " + ConstResources.ERRO, e.getMessage());
+			Assert.assertEquals("O Map não tinha a chave: " + ConstResources.ERRO, e.getMessage());
 		}
 	}
 
@@ -138,18 +151,18 @@ public class HistoricoResourceTest {
 				}
 			});
 		} catch (final PersistenceException e1) {
-			Assert.fail("N��o era para dar erro aqui.");
+			Assert.fail("Não era para dar erro aqui.");
 		}
 
 		final Response response = this.resource.get("1");
 
-		final Object historico = this.getObject(response, "historico");
+		final Object historico = this.getObject(response, ConstResources.HISTORICO);
 		Assert.assertNotNull(historico);
 
 		final List<String> erros = this.getMessage(response, ConstResources.ERRO);
 		Assert.assertNotNull(erros);
 		Assert.assertEquals(1, erros.size());
-		Assert.assertEquals("N��o foi poss��vel encontrar o Hist��rico procurado.", erros.get(0));
+		Assert.assertEquals("Simulando erro do banco", erros.get(0));
 	}
 
 	@Test
@@ -164,12 +177,12 @@ public class HistoricoResourceTest {
 				}
 			});
 		} catch (final PersistenceException e1) {
-			Assert.fail("N��o era para dar erro aqui.");
+			Assert.fail("Não era para dar erro aqui.");
 		}
 
 		final Response response = this.resource.get("1");
 
-		final Object historicoBuscado = this.getObject(response, "historico");
+		final Object historicoBuscado = this.getObject(response, ConstResources.HISTORICO);
 		Assert.assertNotNull(historicoBuscado);
 		Assert.assertEquals(historico, historicoBuscado);
 
@@ -177,7 +190,26 @@ public class HistoricoResourceTest {
 
 	@Test
 	public void testGetAll() {
-		fail("Not yet implemented");
-	}
 
+		final Collection<Historico> historicos = this.createList(10, HistoricoComplemento.NAO);
+
+		try {
+			this.ctx.checking(new Expectations() {
+				{
+					this.oneOf(HistoricoResourceTest.this.bo).get();
+					this.will(returnValue(historicos));
+				}
+			});
+		} catch (final PersistenceException e1) {
+			Assert.fail("Não era para dar erro aqui.");
+		}
+
+		final Response response = this.resource.getAll();
+
+		@SuppressWarnings("unchecked")
+		final Collection<Historico> historicoBuscado = (Collection<Historico>) this.getObject(response, ConstResources.HISTORICO);
+		Assert.assertNotNull(historicoBuscado);
+
+		Assert.assertEquals(10, historicos.size());
+	}
 }

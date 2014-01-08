@@ -7,7 +7,9 @@ import br.com.contabilidade.s70.persistence.exception.ChaveDuplicadaExcpetion;
 
 public interface DefaultDao<Chave, Implementacao> {
 
-	public abstract void save(Implementacao entity) throws ChaveDuplicadaExcpetion;
+	public abstract Implementacao save(Implementacao entity) throws ChaveDuplicadaExcpetion;
+
+	public abstract Implementacao update(Implementacao interfaceParaImplementacao);
 
 	public abstract void delete(Implementacao entity);
 
@@ -22,7 +24,5 @@ public interface DefaultDao<Chave, Implementacao> {
 	public abstract List<Implementacao> findManyResults(final String namedQuery);
 
 	public abstract void delete(String string, Chave id);
-
-	public abstract void update(Implementacao interfaceParaImplementacao);
 
 }

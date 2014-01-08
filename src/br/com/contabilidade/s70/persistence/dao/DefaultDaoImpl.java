@@ -35,11 +35,11 @@ public final class DefaultDaoImpl<Chave, Implementacao> implements DefaultDao<Ch
 	 * @see br.com.contabilidade.s70.persistence.dao.DefaultDao#save(Implementacao)
 	 */
 	@Override
-	public final void save(final Implementacao entity) throws ChaveDuplicadaExcpetion {
+	public final Implementacao save(final Implementacao entity) throws ChaveDuplicadaExcpetion {
 		try {
 			this.em.persist(entity);
 			this.em.flush();
-
+			return entity;
 		} catch (final PersistenceException e) {
 
 			if (e.getCause() instanceof DatabaseException) {
@@ -55,9 +55,10 @@ public final class DefaultDaoImpl<Chave, Implementacao> implements DefaultDao<Ch
 	}
 
 	@Override
-	public void update(final Implementacao entity) {
-		this.em.merge(entity);
+	public Implementacao update(final Implementacao entity) {
+		final Implementacao imp = this.em.merge(entity);
 		this.em.flush();
+		return imp;
 	}
 
 	/*

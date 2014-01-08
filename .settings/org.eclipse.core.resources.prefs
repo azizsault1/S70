@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/br/com/contabilidade/s70/bo/validators/historico/HistoricoValidatorImpl.java=UTF-8
 encoding//src/br/com/contabilidade/s70/persistence/dao/historico/HistoricoDaoImpl.java=UTF-8
+encoding//src/br/com/contabilidade/s70/resources/historico/HistoricoResource.java=UTF-8
 encoding//test/br/com/contabilidade/s70/bo/validators/historico/HistoricoValidatorImplTest.java=UTF-8
 encoding//test/br/com/contabilidade/s70/persistence/dao/historico/HistoricoDaoImplTest.java=UTF-8
 encoding//test/br/com/contabilidade/s70/resources/historico/HistoricoResourceTest.java=UTF-8

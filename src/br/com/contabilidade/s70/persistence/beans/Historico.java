@@ -12,11 +12,11 @@ public interface Historico {
 
 		}
 
-		public String getBancoValue() {
+		public String toSave() {
 			return String.valueOf(value);
 		}
 
-		public static HistoricoComplemento valueBancoOf(final String value) {
+		public static HistoricoComplemento toLoad(final String value) {
 			switch (value) {
 			case "S":
 				return SIM;

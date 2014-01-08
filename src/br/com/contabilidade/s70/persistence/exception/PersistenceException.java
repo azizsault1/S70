@@ -6,7 +6,7 @@ public class PersistenceException extends Exception {
 	private final TypeError type;
 
 	public enum TypeError {
-		DATA_CREATE, REMOVE;
+		DATA_CREATE, REMOVE, SALVAR, ALTERACAO, CONSULTA, CONSULTA_VAZIA;
 	}
 
 	public PersistenceException(final TypeError type, final Throwable ex) {

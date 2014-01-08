@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 
 import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.dao.historico.HistoricoDao;
+import br.com.contabilidade.s70.persistence.exception.PersistenceException;
 import br.com.contabilidade.s70.persistence.transactional.Transactional;
 
 public interface HistoricoFacade {
@@ -27,12 +28,12 @@ public interface HistoricoFacade {
 
 	}
 
-	public abstract void save(final Historico s70t004);
+	public abstract Historico save(final Historico s70t004) throws PersistenceException;
 
-	public abstract void delete(Long idHistorico);
+	public abstract void delete(Long idHistorico) throws PersistenceException;
 
-	public abstract Collection<Historico> get();
+	public abstract Collection<Historico> get() throws PersistenceException;
 
-	public abstract Historico get(Long long1);
+	public abstract Historico get(Long long1) throws PersistenceException;
 
 }

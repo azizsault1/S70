@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.dao.DefaultDao;
 import br.com.contabilidade.s70.persistence.dao.DefaultDaoImpl;
+import br.com.contabilidade.s70.persistence.exception.PersistenceException;
 
 public interface HistoricoDao {
 
@@ -17,12 +18,12 @@ public interface HistoricoDao {
 		}
 	}
 
-	public abstract void save(Historico s70t004);
+	public abstract Historico save(Historico s70t004) throws PersistenceException;
 
-	public abstract void delete(Long idHistorico);
+	public abstract void delete(Long idHistorico) throws PersistenceException;
 
-	public abstract Historico getById(Long id);
+	public abstract Historico getById(Long id) throws PersistenceException;
 
-	public abstract Collection<Historico> getAll();
+	public abstract Collection<Historico> getAll() throws PersistenceException;
 
 }
