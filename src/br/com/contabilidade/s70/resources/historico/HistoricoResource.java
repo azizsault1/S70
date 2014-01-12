@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response.Status;
 
 import br.com.contabilidade.s70.bo.exceptions.ValidateException;
 import br.com.contabilidade.s70.bo.historico.HistoricoBo;
+import br.com.contabilidade.s70.persistence.HistoricoFacade.ReturnSaved;
 import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException;
 
@@ -31,13 +32,14 @@ public class HistoricoResource {
 	public static final String ERRO_INESPERADO = "Erro inesperado. Contate o administrador do sistema.";
 
 	public enum ConstResources {
-		SUCESSO, ERRO, CUIDADO, HISTORICO;
+		SUCESSO, ERRO, CUIDADO, HISTORICO, HISTORICOS;
 	}
 
 	private final HistoricoBo bo;
 
 	public HistoricoResource() {
 		this(HistoricoBo.Factory.create());
+		System.out.println("HistoricoResource.HistoricoResource()");
 	}
 
 	public HistoricoResource(final HistoricoBo historico) {
@@ -66,8 +68,10 @@ public class HistoricoResource {
 		Historico hist = new HistoricoImpl();
 
 		try {
-			hist = this.bo.save(historico);
-			messages.add("Histórico salvo com sucesso.");
+
+			final ReturnSaved returned = this.bo.save(historico);
+			messages.add(returned.getMessage());
+			hist = returned.getHistorico();
 			maps.put(ConstResources.SUCESSO.name(), messages);
 
 		} catch (final PersistenceException e) {
@@ -76,12 +80,12 @@ public class HistoricoResource {
 			maps.put(ConstResources.ERRO.name(), messages);
 
 		} catch (final ValidateException e) {
-			e.printStackTrace();
+			System.err.println("HistoricoResource.save(): " + e.getAllErrors());
 			messages.addAll(e.getAllErrors());
 			maps.put(ConstResources.ERRO.name(), messages);
 
 		} catch (final Exception e) {
-			e.printStackTrace();
+			System.err.println("HistoricoResource.save()" + e);
 			messages.add(ERRO_INESPERADO);
 			maps.put(ConstResources.ERRO.name(), messages);
 
@@ -160,7 +164,7 @@ public class HistoricoResource {
 		try {
 			lista = this.todos();
 		} catch (final PersistenceException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 			menssagem.add(e.getMessage());
 			maps.put(ConstResources.ERRO.name(), menssagem);
 
@@ -171,7 +175,7 @@ public class HistoricoResource {
 			return Response.ok(new Viewable("/historico/historicoLista.jsp", maps)).build();
 
 		}
-		maps.put(ConstResources.HISTORICO.name(), lista);
+		maps.put(ConstResources.HISTORICOS.name(), lista);
 		return Response.ok(new Viewable("/historico/historicoLista.jsp", maps)).build();
 	}
 

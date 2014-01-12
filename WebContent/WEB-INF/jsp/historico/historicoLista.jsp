@@ -1,3 +1,5 @@
+<%@page import="java.util.Collection"%>
+<%@page import="br.com.contabilidade.s70.resources.historico.HistoricoResource.ConstResources"%>
 <%@page import="java.util.Map"%>
 <%@page import="br.com.contabilidade.s70.persistence.beans.Historico"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -8,7 +10,7 @@
 
 <%
 	Map<String, Object> mps = (Map<String, Object>) request.getAttribute("it");
-	List<Historico> historicos = (List<Historico>) mps.get("historicos");
+	Collection<Historico> historicos = (Collection<Historico>) mps.get(ConstResources.HISTORICOS.name());
 
 	if(historicos != null && !historicos.isEmpty()){
 %>

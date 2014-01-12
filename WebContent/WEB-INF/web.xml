@@ -10,6 +10,11 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
+   <listener>
+	   	<listener-class>br.com.contabilidade.s70.listener.InicializacaoSistema</listener-class>
+   </listener>
+  
+  
    <filter>
 		<filter-name>jersey.filter</filter-name>
 		<filter-class>com.sun.jersey.spi.container.servlet.ServletContainer</filter-class>

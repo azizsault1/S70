@@ -20,6 +20,7 @@ class HistoricoDaoImpl implements HistoricoDao {
 	private static final String HISTORICO_CONSULTAR = "Não foi possível consultar o histórico. Contate o administrador do sistema.";
 	private static final String HISTOFICO_CONULTA_VAZIA = "Não foi possível encontrar o histórico.";
 	private static final String HISTORICO_CONSTULTA_TIMEOUT = "A consulta demorou mais do que o esperado. Contate o administrador do sistema.";
+	private static final String HISTORICO_DUPLICADO = "Já existe um histórico com este código.";
 
 	private final DefaultDao<Long, HistoricoImpl> defaultDao;
 
@@ -33,7 +34,7 @@ class HistoricoDaoImpl implements HistoricoDao {
 		try {
 			return this.defaultDao.save(historico);
 		} catch (final ChaveDuplicadaExcpetion e) {
-			return this.update(historico);
+			throw new PersistenceException(TypeError.CHAVE_DUPLICADA, HISTORICO_DUPLICADO, e);
 		} catch (final Exception e) {
 			throw new PersistenceException(TypeError.SALVAR, HISTORICO_SALVAR, e);
 		}
@@ -44,9 +45,11 @@ class HistoricoDaoImpl implements HistoricoDao {
 		return new HistoricoImpl(e.getId(), e.getDescricao(), e.hasComplemento().toSave());
 	}
 
-	private Historico update(final HistoricoImpl entity) throws PersistenceException {
+	@Override
+	public Historico update(final Historico entity) throws PersistenceException {
+		final HistoricoImpl historico = this.interfaceParaImplementacao(entity);
 		try {
-			return this.defaultDao.update(entity);
+			return this.defaultDao.update(historico);
 		} catch (final Exception e) {
 			throw new PersistenceException(TypeError.ALTERACAO, HISTORICO_ALTERAR, e);
 		}
@@ -92,4 +95,14 @@ class HistoricoDaoImpl implements HistoricoDao {
 		}
 	}
 
+	@Override
+	public boolean contais(final long id) {
+
+		try {
+			this.defaultDao.findReferenceOnly(id);
+			return Boolean.TRUE;
+		} catch (final Exception e) {
+			return Boolean.FALSE;
+		}
+	}
 }

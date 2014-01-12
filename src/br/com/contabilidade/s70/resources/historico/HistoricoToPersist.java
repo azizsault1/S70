@@ -25,7 +25,7 @@ class HistoricoToPersist implements Historico {
 	}
 
 	@Override
-	@XmlElement(name = "id")
+	@XmlElement(name = "codigo")
 	public long getId() {
 		return this.id;
 	}
@@ -36,10 +36,14 @@ class HistoricoToPersist implements Historico {
 		return this.descricao;
 	}
 
-	@Override
 	@XmlElement(name = "complemento")
+	public String getComplemento() {
+		return this.complemento;
+	}
+
+	@Override
 	public HistoricoComplemento hasComplemento() {
-		return HistoricoComplemento.SIM;
+		return HistoricoComplemento.toLoad(this.complemento);
 	}
 
 }

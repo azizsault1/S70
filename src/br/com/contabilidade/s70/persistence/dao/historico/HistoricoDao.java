@@ -20,10 +20,14 @@ public interface HistoricoDao {
 
 	public abstract Historico save(Historico s70t004) throws PersistenceException;
 
+	public abstract Historico update(Historico s70t004) throws PersistenceException;
+
 	public abstract void delete(Long idHistorico) throws PersistenceException;
 
 	public abstract Historico getById(Long id) throws PersistenceException;
 
 	public abstract Collection<Historico> getAll() throws PersistenceException;
+
+	public abstract boolean contais(long id);
 
 }

@@ -1,40 +1,40 @@
 package br.com.contabilidade.s70.persistence.transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
+public class TransactionalImpl<T> implements Transactional {
 
-public class TransactionalImpl implements Transactional {
-
+	private final EntityTransaction transaction;
 	private final EntityManager em;
 
-	public TransactionalImpl(final EntityManager em) {
-		this.em = em;
+	public TransactionalImpl(final EntityManager entityManager) {
+		this.em = entityManager;
+		this.transaction = this.em.getTransaction();
 	}
 
 	@Override
 	public final void beginTransaction() {
-		this.em.getTransaction().begin();
+		System.out.println("TransactionalImpl.beginTransaction() INCIANDO A TRANSAÇÃO");
+		this.transaction.begin();
 	}
 
 	@Override
 	public final void commit() {
-		this.em.getTransaction().commit();
+		System.out.println("TransactionalImpl.commit() COMMITANDO A TRANSAÇÃO");
+		this.transaction.commit();
 	}
 
 	@Override
 	public final void rollback() {
-		this.em.getTransaction().rollback();
+		System.out.println("TransactionalImpl.rollback() ROOLLBACK NA TRANSAÇÃO");
+		this.transaction.rollback();
 	}
 
 	@Override
-	public final void closeTransaction() {
+	public void close() {
+		System.out.println("TransactionalImpl.close() FECHANDO A CONEXÃO");
 		this.em.close();
-	}
-
-	@Override
-	public final void commitAndCloseTransaction() {
-		this.commit();
-		this.closeTransaction();
 	}
 
 }

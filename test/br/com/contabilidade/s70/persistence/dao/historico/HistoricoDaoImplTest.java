@@ -35,6 +35,7 @@ public class HistoricoDaoImplTest {
 	private static final String HISTORICO_CONSULTAR = "Não foi possível consultar o histórico. Contate o administrador do sistema.";
 	private static final String HISTOFICO_CONULTA_VAZIA = "Não foi possível encontrar o histórico.";
 	private static final String HISTORICO_CONSTULTA_TIMEOUT = "A consulta demorou mais do que o esperado. Contate o administrador do sistema.";
+	private static final String HISTORICO_DUPLICADO = "Já existe um histórico com este código.";
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -85,11 +86,13 @@ public class HistoricoDaoImplTest {
 			this.ctx.checking(new Expectations() {
 				{
 					this.oneOf(HistoricoDaoImplTest.this.defaultDao).save(this.with(historico));
+					this.will(returnValue(historico));
 
 				}
 			});
 
-			this.dao.save(historico);
+			final Historico historicoSalvo = this.dao.save(historico);
+			Assert.assertNotNull(historicoSalvo);
 
 		} catch (final Exception e) {
 			this.erroNaoEsperado(e);
@@ -123,7 +126,7 @@ public class HistoricoDaoImplTest {
 	}
 
 	@Test
-	public void saveHistoricoSimulandoErroUpdate() {
+	public void saveHistoricoSimulandoErroChaveDuplicada() {
 		try {
 
 			final HistoricoImpl historico = this.create(1, HistoricoComplemento.SIM);
@@ -131,7 +134,7 @@ public class HistoricoDaoImplTest {
 			this.ctx.checking(new Expectations() {
 				{
 					this.oneOf(HistoricoDaoImplTest.this.defaultDao).save(this.with(historico));
-					this.will(throwException(new PersistenceException(TypeError.ALTERACAO, "Simulando um erro de update.")));
+					this.will(throwException(new ChaveDuplicadaExcpetion("Simulando um erro de update.")));
 				}
 			});
 
@@ -140,8 +143,8 @@ public class HistoricoDaoImplTest {
 			this.erroNaoEsperado();
 
 		} catch (final PersistenceException e) {
-			Assert.assertEquals(TypeError.SALVAR, e.getType());
-			Assert.assertEquals(HISTORICO_SALVAR, e.getMessage());
+			Assert.assertEquals(TypeError.CHAVE_DUPLICADA, e.getType());
+			Assert.assertEquals(HISTORICO_DUPLICADO, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
 			this.erroNaoEsperado(e);
@@ -156,13 +159,13 @@ public class HistoricoDaoImplTest {
 
 			this.ctx.checking(new Expectations() {
 				{
-					this.oneOf(HistoricoDaoImplTest.this.defaultDao).save(this.with(historico));
-					this.will(throwException(new ChaveDuplicadaExcpetion("Erro vindo do banco.")));
 					this.oneOf(HistoricoDaoImplTest.this.defaultDao).update(this.with(historico));
+					this.will(returnValue(historico));
 				}
 			});
 
-			this.dao.save(historico);
+			final Historico historicoAlterado = this.dao.update(historico);
+			Assert.assertNotNull(historicoAlterado);
 
 		} catch (final Exception e) {
 			this.erroNaoEsperado(e);
@@ -177,41 +180,12 @@ public class HistoricoDaoImplTest {
 
 			this.ctx.checking(new Expectations() {
 				{
-					this.oneOf(HistoricoDaoImplTest.this.defaultDao).save(this.with(historico));
-					this.will(throwException(new ChaveDuplicadaExcpetion("Erro vindo do banco.")));
 					this.oneOf(HistoricoDaoImplTest.this.defaultDao).update(this.with(historico));
 					this.will(throwException(new javax.persistence.PersistenceException()));
 				}
 			});
 
-			this.dao.save(historico);
-			Assert.fail("Era para ter dado erro.");
-
-		} catch (final PersistenceException e) {
-			Assert.assertEquals(TypeError.ALTERACAO, e.getType());
-			Assert.assertEquals(HISTORICO_ALTERAR, e.getMessage());
-			Assert.assertNotNull(e.getCause());
-		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
-		}
-
-	}
-
-	@Test
-	public void updateErroException() {
-		try {
-			final HistoricoImpl historico = this.create(1, HistoricoComplemento.SIM);
-
-			this.ctx.checking(new Expectations() {
-				{
-					this.oneOf(HistoricoDaoImplTest.this.defaultDao).save(this.with(historico));
-					this.will(throwException(new ChaveDuplicadaExcpetion("Erro vindo do banco.")));
-					this.oneOf(HistoricoDaoImplTest.this.defaultDao).update(this.with(historico));
-					this.will(throwException(new Exception()));
-				}
-			});
-
-			this.dao.save(historico);
+			this.dao.update(historico);
 			Assert.fail("Era para ter dado erro.");
 
 		} catch (final PersistenceException e) {
@@ -536,6 +510,32 @@ public class HistoricoDaoImplTest {
 		} catch (final Exception e) {
 			this.erroNaoEsperado(e);
 		}
+	}
+
+	@Test
+	public void testNoContains() {
+		this.ctx.checking(new Expectations() {
+			{
+				this.oneOf(HistoricoDaoImplTest.this.defaultDao).find(Long.valueOf(1));
+				this.will(throwException(new javax.persistence.PersistenceException()));
+			}
+		});
+
+		Assert.assertFalse(this.dao.contais(1));
+
+	}
+
+	@Test
+	public void testContains() {
+		this.ctx.checking(new Expectations() {
+			{
+				this.oneOf(HistoricoDaoImplTest.this.defaultDao).find(Long.valueOf(1));
+				this.will(returnValue(HistoricoDaoImplTest.this.create(1, HistoricoComplemento.SIM)));
+			}
+		});
+
+		Assert.assertTrue(this.dao.contais(1));
+
 	}
 
 	@After

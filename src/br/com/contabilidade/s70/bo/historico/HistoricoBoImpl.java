@@ -5,6 +5,7 @@ import java.util.Collection;
 import br.com.contabilidade.s70.bo.exceptions.ValidateException;
 import br.com.contabilidade.s70.bo.validators.historico.HistoricoValidator;
 import br.com.contabilidade.s70.persistence.HistoricoFacade;
+import br.com.contabilidade.s70.persistence.HistoricoFacade.ReturnSaved;
 import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException;
 
@@ -24,8 +25,9 @@ class HistoricoBoImpl implements HistoricoBo {
 	}
 
 	@Override
-	public Historico save(final Historico s70t004) throws PersistenceException, ValidateException {
+	public ReturnSaved save(final Historico s70t004) throws PersistenceException, ValidateException {
 		this.validador.validate(s70t004);
+
 		return this.facade.save(s70t004);
 	}
 

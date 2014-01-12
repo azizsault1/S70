@@ -1,31 +1,33 @@
+<%@page import="java.util.Collection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.sun.corba.se.impl.orbutil.closure.Constant"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="br.com.contabilidade.s70.resources.historico.HistoricoResource.ConstResources"%>
 <%
-	Map<String, Object> mps = (Map<String, Object>) request.getAttribute("it");
+	if (request != null && request.getAttribute("it") != null) {
+		Map<String, Object> mps = (Map<String, Object>) request.getAttribute("it");
 
-	if(mps.containsKey(ConstResources.ERRO)){
-		List<String> erros = (List<String>) mps.get(ConstResources.ERRO);
+		if (mps.containsKey(ConstResources.ERRO.name())) {
+			Collection<String> erros = (Collection<String>) mps.get(ConstResources.ERRO.name());
 %>	
 	<div id="row">
 		<div class="col-md-12 alert alert-danger" <%out.print(erros.isEmpty()? "hidden" : "");%> >
 		
 <%
-				out.print("Teste de erro.");
-				for(String erro : erros){%>
+			for (String erro : erros) {
+%>
 					<p><%out.print(erro); %></p>
-<% 	
-				}
+<%
+			}
 %>
 		</div>
 	</div>
 <%
-	} 
+		} 
 
-	if(mps.containsKey(ConstResources.CUIDADO)){
-		List<String> cuidados = (List<String>) mps.get(ConstResources.CUIDADO);
+		if(mps.containsKey(ConstResources.CUIDADO.name())){
+			Collection<String> cuidados = (Collection<String>) mps.get(ConstResources.CUIDADO.name());
 	
 %>	
 	<div id="row">
@@ -40,11 +42,10 @@
 		</div>
 	</div>
 <%
-	} 
+		} 
 	
-	if(mps.containsKey(ConstResources.SUCESSO)){
-		List<String> sucessos = (List<String>) mps.get(ConstResources.SUCESSO);
-	
+		if (mps.containsKey(ConstResources.SUCESSO.name())) {
+			Collection<String> sucessos = (Collection<String>) mps.get(ConstResources.SUCESSO.name());
 %>		
 	<div id="row">
 		<div class="col-md-12 alert alert-success" <%out.print(sucessos.isEmpty()? "hidden" : "");%> >
@@ -58,7 +59,8 @@
 		</div>
 	</div>
 <%
-	} 
+		} 
+	}
 %>
 
 

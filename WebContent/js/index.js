@@ -1,3 +1,3 @@
 function acaoBtnHistoricoPadrao(){
-	getAjax('/historico/home', '#center');
+	window.location.href = homeSite +'/historico/home';
 }

@@ -4,12 +4,13 @@ import java.util.Collection;
 
 import br.com.contabilidade.s70.bo.exceptions.ValidateException;
 import br.com.contabilidade.s70.persistence.HistoricoFacade;
+import br.com.contabilidade.s70.persistence.HistoricoFacade.ReturnSaved;
 import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException;
 
 public interface HistoricoBo {
 
-	public Historico save(final Historico s70t004) throws PersistenceException, ValidateException;
+	public ReturnSaved save(final Historico s70t004) throws PersistenceException, ValidateException;
 
 	public Historico get(Long long1) throws PersistenceException;
 
