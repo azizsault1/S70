@@ -17,7 +17,7 @@ import br.com.contabilidade.s70.persistence.beans.Historico;
 @Entity(name = "S70T004")
 @NamedQueries({
 		//
-		@NamedQuery(name = "S70t004.findAll", query = "SELECT s FROM S70T004 s"),
+		@NamedQuery(name = "S70t004.findAll", query = "SELECT s FROM S70T004 s order by s.id"),
 		@NamedQuery(name = "S70t004.remove", query = " DELETE FROM S70T004 WHERE id = :id") })
 class HistoricoImpl implements Serializable, Historico {
 	private static final long serialVersionUID = 1L;
@@ -43,11 +43,6 @@ class HistoricoImpl implements Serializable, Historico {
 		this.complemento = s70t04cp03;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.contabilidade.s70.persistence.dao.s70t004.S40T004#getS70t04cp01()
-	 */
 	@Override
 	public long getId() {
 		return this.id;
@@ -57,11 +52,6 @@ class HistoricoImpl implements Serializable, Historico {
 		this.id = s70t04cp01;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.contabilidade.s70.persistence.dao.s70t004.S40T004#getS70t04cp02()
-	 */
 	@Override
 	public String getDescricao() {
 		return this.descricao;
@@ -71,11 +61,6 @@ class HistoricoImpl implements Serializable, Historico {
 		this.descricao = s70t04cp02;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.contabilidade.s70.persistence.dao.s70t004.S40T004#getS70t04cp03()
-	 */
 	@Override
 	public HistoricoComplemento hasComplemento() {
 		return HistoricoComplemento.toLoad(this.complemento);

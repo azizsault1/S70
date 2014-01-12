@@ -16,6 +16,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.contabilidade.s70.fabrica.FabricaObjetos;
 import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.beans.Historico.HistoricoComplemento;
 import br.com.contabilidade.s70.persistence.dao.DefaultDao;
@@ -28,6 +29,7 @@ public class HistoricoDaoImplTest {
 	private Mockery ctx;
 	private DefaultDao<Long, HistoricoImpl> defaultDao;
 	private HistoricoDaoImpl dao;
+	private FabricaObjetos fabrica;
 
 	private static final String HISTORICO_REMOVER = "Não foi possível remover o histórico. Contate o administrador do sistema.";
 	private static final String HISTORICO_SALVAR = "Não foi possível gravar o histórico. Contate o administrador do sistema.";
@@ -43,17 +45,8 @@ public class HistoricoDaoImplTest {
 		this.ctx = new Mockery();
 		this.defaultDao = this.ctx.mock(DefaultDao.class);
 		this.dao = new HistoricoDaoImpl(this.defaultDao);
+		this.fabrica = FabricaObjetos.Factory.create();
 
-	}
-
-	// ERROS PADRAO
-	private void erroNaoEsperado() {
-		Assert.fail("Erro Não esperado.");
-	}
-
-	private void erroNaoEsperado(final Exception e) {
-		e.printStackTrace();
-		this.erroNaoEsperado();
 	}
 
 	// CRIACAOO DE OBJETOS
@@ -95,7 +88,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertNotNull(historicoSalvo);
 
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -114,14 +107,14 @@ public class HistoricoDaoImplTest {
 
 			this.dao.save(historico);
 
-			this.erroNaoEsperado();
+			this.fabrica.erroNaoEsperado();
 
 		} catch (final PersistenceException e) {
 			Assert.assertEquals(TypeError.SALVAR, e.getType());
 			Assert.assertEquals(HISTORICO_SALVAR, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -140,14 +133,14 @@ public class HistoricoDaoImplTest {
 
 			this.dao.save(historico);
 
-			this.erroNaoEsperado();
+			this.fabrica.erroNaoEsperado();
 
 		} catch (final PersistenceException e) {
 			Assert.assertEquals(TypeError.CHAVE_DUPLICADA, e.getType());
 			Assert.assertEquals(HISTORICO_DUPLICADO, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -168,7 +161,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertNotNull(historicoAlterado);
 
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 
 	}
@@ -193,7 +186,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertEquals(HISTORICO_ALTERAR, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 
 	}
@@ -212,7 +205,7 @@ public class HistoricoDaoImplTest {
 		try {
 			this.dao.delete(Long.valueOf(2));
 		} catch (final PersistenceException e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -227,13 +220,13 @@ public class HistoricoDaoImplTest {
 
 		try {
 			this.dao.delete(Long.valueOf(2));
-			this.erroNaoEsperado();
+			this.fabrica.erroNaoEsperado();
 		} catch (final PersistenceException e) {
 			Assert.assertEquals(TypeError.REMOVE, e.getType());
 			Assert.assertEquals(HISTORICO_REMOVER, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -248,13 +241,13 @@ public class HistoricoDaoImplTest {
 
 		try {
 			this.dao.delete(Long.valueOf(2));
-			this.erroNaoEsperado();
+			this.fabrica.erroNaoEsperado();
 		} catch (final PersistenceException e) {
 			Assert.assertEquals(TypeError.REMOVE, e.getType());
 			Assert.assertEquals(HISTORICO_REMOVER, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -269,13 +262,13 @@ public class HistoricoDaoImplTest {
 
 		try {
 			this.dao.delete(Long.valueOf(2));
-			this.erroNaoEsperado();
+			this.fabrica.erroNaoEsperado();
 		} catch (final PersistenceException e) {
 			Assert.assertEquals(TypeError.REMOVE, e.getType());
 			Assert.assertEquals(HISTORICO_REMOVER, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -312,7 +305,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertEquals("1", historicoEncontrado.getDescricao());
 			Assert.assertEquals(HistoricoComplemento.SIM, historicoEncontrado.hasComplemento());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -333,7 +326,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertEquals(HISTOFICO_CONULTA_VAZIA, e.getMessage());
 			Assert.assertNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -355,7 +348,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertEquals(HISTORICO_CONSULTAR, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -377,7 +370,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertEquals(HISTORICO_CONSULTAR, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -400,7 +393,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertEquals(HISTORICO_CONSULTAR, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -422,7 +415,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertEquals(HISTORICO_CONSULTAR, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -444,7 +437,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertEquals(HISTORICO_CONSTULTA_TIMEOUT, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -466,7 +459,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertEquals(HISTORICO_CONSULTAR, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -485,7 +478,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertEquals(10, historicos.size());
 
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 
@@ -508,7 +501,7 @@ public class HistoricoDaoImplTest {
 			Assert.assertEquals(HISTORICO_CONSULTAR, e.getMessage());
 			Assert.assertNotNull(e.getCause());
 		} catch (final Exception e) {
-			this.erroNaoEsperado(e);
+			this.fabrica.erroNaoEsperado(e);
 		}
 	}
 

@@ -39,7 +39,6 @@ public class HistoricoResource {
 
 	public HistoricoResource() {
 		this(HistoricoBo.Factory.create());
-		System.out.println("HistoricoResource.HistoricoResource()");
 	}
 
 	public HistoricoResource(final HistoricoBo historico) {

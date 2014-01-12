@@ -24,8 +24,13 @@ public class HistoricoFacadeImpl implements HistoricoFacade {
 		this.transactional = Transactional.Factory.create(em);
 	}
 
+	public HistoricoFacadeImpl(final Transactional transactional, final HistoricoDao dao) {
+		this.dao = dao;
+		this.transactional = transactional;
+	}
+
 	@Override
-	public ReturnSaved save(final Historico s70t004) throws PersistenceException {
+	public ReturnSaved save(final Historico historico) throws PersistenceException {
 
 		final Historico historicoSalvo;
 		final String message;
@@ -33,11 +38,11 @@ public class HistoricoFacadeImpl implements HistoricoFacade {
 		this.transactional.beginTransaction();
 
 		try {
-			if (this.contains(s70t004.getId())) {
-				historicoSalvo = this.update(s70t004);
+			if (this.contains(historico.getId())) {
+				historicoSalvo = this.update(historico);
 				message = HISTORICO_ALTERADO;
 			} else {
-				historicoSalvo = this.persist(s70t004);
+				historicoSalvo = this.persist(historico);
 				message = HISTORICO_SALVO;
 			}
 
@@ -72,7 +77,6 @@ public class HistoricoFacadeImpl implements HistoricoFacade {
 
 	@Override
 	public Historico get(final Long id) throws PersistenceException {
-		System.out.println("HistoricoFacadeImpl.get(Long " + id + ")");
 		final Historico historico = this.dao.getById(id);
 		this.transactional.close();
 		return historico;
@@ -80,7 +84,6 @@ public class HistoricoFacadeImpl implements HistoricoFacade {
 
 	@Override
 	public Collection<Historico> get() throws PersistenceException {
-		System.out.println("HistoricoFacadeImpl.get()");
 		final Collection<Historico> historicos = this.dao.getAll();
 		this.transactional.close();
 		return historicos;
@@ -91,6 +94,8 @@ public class HistoricoFacadeImpl implements HistoricoFacade {
 		this.transactional.beginTransaction();
 		try {
 			this.dao.delete(idHistorico);
+
+			this.transactional.commit();
 		} catch (final Exception e) {
 			this.transactional.rollback();
 			throw e;

@@ -24,16 +24,6 @@ public final class DefaultDaoImpl<Chave, Implementacao> implements DefaultDao<Ch
 		this.entityClass = entityClass;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.s70.dao.Dao#save(Interface)
-	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.contabilidade.s70.persistence.dao.DefaultDao#save(Implementacao)
-	 */
 	@Override
 	public final Implementacao save(final Implementacao entity) throws ChaveDuplicadaExcpetion {
 		try {
@@ -61,16 +51,6 @@ public final class DefaultDaoImpl<Chave, Implementacao> implements DefaultDao<Ch
 		return imp;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.s70.dao.Dao#delete(Interface)
-	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.contabilidade.s70.persistence.dao.DefaultDao#delete(Implementacao)
-	 */
 	@Override
 	public final void delete(final Implementacao entity) {
 		final Implementacao object = this.em.merge(entity);

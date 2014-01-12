@@ -14,7 +14,6 @@ function save(){
 	
 	var codigo = $( "#formCodigo" ).val();
 	var desc = $( "#formDesc" ).val();
-	
 	var compl = $("#radioSim").is(":checked")? "S": "N";
 	
 	var historico = new Historico(codigo, desc, compl);

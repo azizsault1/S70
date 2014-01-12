@@ -3,6 +3,7 @@ package br.com.contabilidade.s70.persistence.dao.historico;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.persistence.LockTimeoutException;
 
@@ -59,7 +60,9 @@ class HistoricoDaoImpl implements HistoricoDao {
 	@Override
 	public void delete(final Long idHistorico) throws PersistenceException {
 		try {
-			this.defaultDao.delete("S70t004.remove", idHistorico);
+			final Historico historico = this.defaultDao.find(idHistorico);
+
+			this.defaultDao.delete(this.interfaceParaImplementacao(historico));
 		} catch (final Exception e) {
 			throw new PersistenceException(TypeError.REMOVE, HISTORICO_REMOVER, e);
 		}
@@ -89,7 +92,9 @@ class HistoricoDaoImpl implements HistoricoDao {
 	@Override
 	public Collection<Historico> getAll() throws PersistenceException {
 		try {
-			return Collections.unmodifiableCollection(new LinkedList<Historico>(this.defaultDao.findAll()));
+			final List<HistoricoImpl> historicos = this.defaultDao.findManyResults("S70t004.findAll");
+
+			return Collections.unmodifiableCollection(new LinkedList<Historico>(historicos));
 		} catch (final Exception e) {
 			throw new PersistenceException(TypeError.CONSULTA, HISTORICO_CONSULTAR, e);
 		}
@@ -99,10 +104,13 @@ class HistoricoDaoImpl implements HistoricoDao {
 	public boolean contais(final long id) {
 
 		try {
-			this.defaultDao.findReferenceOnly(id);
-			return Boolean.TRUE;
+			final Historico result = this.defaultDao.find(id);
+			if (result != null) {
+				return Boolean.TRUE;
+			}
+
 		} catch (final Exception e) {
-			return Boolean.FALSE;
 		}
+		return Boolean.FALSE;
 	}
 }
