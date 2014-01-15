@@ -1,0 +1,65 @@
+<div class="panel panel-primary">
+	<div class="panel-heading"><h4>SU Software - Cadastro de Centros de Custo</h4></div>		
+	<div class="panel-body">
+		<form>
+			<legend>Centro de Custo</legend>
+			<div class="row">
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="text">Centro de Custo</label>
+						<input type="text" class="form-control" id="centroCusto" placeholder="s70t01cp01_1" maxlength="5">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="text">Denominação</label>
+						<input type="text" class="form-control" id="Denominação" placeholder="s70t01cp02" maxlength="25">
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-bottom:20px">
+				<div class="col-md-2">
+					<label> Capitaliza: </label>
+					<div class="btn-group"> 
+						<button type="button" class="btn btn-default">Sim B</button > 
+						<button type="button" class="btn btn-default">Não B</button>
+					</div>
+				</div>
+				<div class="col-md-7" >
+					<label> Status: </label>
+					<div class="btn-group" style="display:block">
+						<button type="button" class="btn btn-default">Administração - s70t11cp01 e cp02</button>
+						<button type="button" class="btn btn-default">Obras em Andamento</button>
+						<button type="button" class="btn btn-default">Controle interno</button>
+						<button type="button" class="btn btn-default">Obras encerradas</button>
+					</div>
+				</div>
+			</div>
+			<legend> Superintendência </legend>
+			<div class="row">
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="centroCusto">Centro de Custo</label>
+						<input type="number" class="form-control" id="centroCusto" placeholder="s70t01cp01_2" maxlength="5">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<button id="carregar" type="button" data-loading-text="Carregando..." class="btn btn-primary">Carregar</button>								
+				</div>							
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="text">Superintendência</label>
+						<input type="text" class="form-control" id="Superintendência" placeholder="s70t01cp03" maxlength="25" disabled="true">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="text">Percentual</label>
+						<input type="number" class="form-control" id="Percentual" placeholder="s70t01cp52_1" maxlength="5"  step="any">
+					</div>
+				</div>
+			</div>	
+			<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+	</div>
+</div>
