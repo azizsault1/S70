@@ -1,5 +1,5 @@
+<%@page import="br.com.contabilidade.s70.resources.ConstResources"%>
 <%@page import="java.util.Collection"%>
-<%@page import="br.com.contabilidade.s70.resources.historico.HistoricoResource.ConstResources"%>
 <%@page import="java.util.Map"%>
 <%@page import="br.com.contabilidade.s70.persistence.beans.Historico"%>
 <%@page import="java.text.SimpleDateFormat"%>

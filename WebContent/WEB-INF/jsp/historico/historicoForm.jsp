@@ -1,4 +1,4 @@
-<%@page import="br.com.contabilidade.s70.resources.historico.HistoricoResource.ConstResources"%>
+<%@page import="br.com.contabilidade.s70.resources.ConstResources"%>
 <%@page import="br.com.contabilidade.s70.persistence.beans.Historico.HistoricoComplemento"%>
 <%@page import="com.sun.tools.xjc.reader.xmlschema.ct.ComplexTypeBindingMode"%>
 <%@page import="br.com.contabilidade.s70.persistence.beans.Historico"%>
@@ -12,7 +12,7 @@
 
 <div class="panel panel-primary">
 	<div  class="panel-heading">
-		CADASTRO DE HISTÓRICOS
+		<h4>SU Software - Cadastro de Historicos</h4>
 	</div>
 	<div class="panel-body">
 	<form role="form" >

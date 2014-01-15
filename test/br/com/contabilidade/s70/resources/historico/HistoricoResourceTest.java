@@ -21,7 +21,7 @@ import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.beans.Historico.HistoricoComplemento;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException.TypeError;
-import br.com.contabilidade.s70.resources.historico.HistoricoResource.ConstResources;
+import br.com.contabilidade.s70.resources.ConstResources;
 
 import com.sun.jersey.api.view.Viewable;
 

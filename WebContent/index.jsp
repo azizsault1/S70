@@ -23,6 +23,7 @@
     <div class="container">
 		<div id="center">
 			<p><a class="btn btn-primary btn-lg" role="button" onclick="acaoBtnHistoricoPadrao();">Cadastro de Histórico Padrão &raquo;</a></p>
+			<p><a class="btn btn-primary btn-lg" role="button" onclick="acaoBtnCentroCusto();">Cadastro de Centro de Custo &raquo;</a></p>
 		</div>
 	</div>
   </body>

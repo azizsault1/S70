@@ -3,10 +3,10 @@ package br.com.contabilidade.s70.bo.historico;
 import java.util.Collection;
 
 import br.com.contabilidade.s70.bo.exceptions.ValidateException;
-import br.com.contabilidade.s70.persistence.HistoricoFacade;
-import br.com.contabilidade.s70.persistence.HistoricoFacade.ReturnSaved;
 import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException;
+import br.com.contabilidade.s70.persistence.facade.historico.HistoricoFacade;
+import br.com.contabilidade.s70.persistence.facade.historico.HistoricoFacade.ReturnSaved;
 
 public interface HistoricoBo {
 

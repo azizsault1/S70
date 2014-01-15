@@ -1,7 +1,8 @@
-package br.com.contabilidade.s70.persistence;
+package br.com.contabilidade.s70.persistence.facade.historico;
 
 import java.util.Collection;
 
+import br.com.contabilidade.s70.persistence.DriverManagerImpl;
 import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException;
 

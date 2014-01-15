@@ -18,11 +18,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import br.com.contabilidade.s70.resources.*;
 import br.com.contabilidade.s70.bo.exceptions.ValidateException;
 import br.com.contabilidade.s70.bo.historico.HistoricoBo;
-import br.com.contabilidade.s70.persistence.HistoricoFacade.ReturnSaved;
 import br.com.contabilidade.s70.persistence.beans.Historico;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException;
+import br.com.contabilidade.s70.persistence.facade.historico.HistoricoFacade.ReturnSaved;
 
 import com.sun.jersey.api.view.Viewable;
 
@@ -30,10 +31,6 @@ import com.sun.jersey.api.view.Viewable;
 public class HistoricoResource {
 
 	public static final String ERRO_INESPERADO = "Erro inesperado. Contate o administrador do sistema.";
-
-	public enum ConstResources {
-		SUCESSO, ERRO, CUIDADO, HISTORICO, HISTORICOS;
-	}
 
 	private final HistoricoBo bo;
 

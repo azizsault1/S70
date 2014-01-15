@@ -1,9 +1,9 @@
+<%@page import="br.com.contabilidade.s70.resources.ConstResources"%>
 <%@page import="java.util.Collection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.sun.corba.se.impl.orbutil.closure.Constant"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
-<%@page import="br.com.contabilidade.s70.resources.historico.HistoricoResource.ConstResources"%>
 <%
 	if (request != null && request.getAttribute("it") != null) {
 		Map<String, Object> mps = (Map<String, Object>) request.getAttribute("it");
