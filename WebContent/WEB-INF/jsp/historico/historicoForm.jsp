@@ -10,7 +10,7 @@
 	Historico historico = (Historico) mps.get(ConstResources.HISTORICO.name());
 %>
 
-<div class="panel panel-primary">
+<div class="panel panel-default">
 	<div  class="panel-heading">
 		<h4>SU Software - Cadastro de Historicos</h4>
 	</div>
@@ -36,7 +36,6 @@
 					<label class="radio-inline">
 						<input id="radioNao" name="optionsRadios" type="radio" id="checkNao" value="Nao" <%out.print(historico.hasComplemento() == HistoricoComplemento.NAO? "checked": "");%> >Não
 					</label>
-				<!-- input type="checkbox" id="formCompl" class="form-control" --> 
 			</div>
 		</div>
 		<div id="row">

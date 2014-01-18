@@ -27,10 +27,11 @@ class CentroCustoImpl implements Serializable, CentroCusto {
 
 	private String a;
 
-	private BigDecimal b;
+	@Column(name = "b")
+	private int tipoObra;
 
 	@Column(name = "S70T01CP01_2")
-	private BigDecimal s70t01cp012;
+	private int s70t01cp012;
 
 	private String s70t01cp02;
 
@@ -51,7 +52,7 @@ class CentroCustoImpl implements Serializable, CentroCusto {
 	 * @see br.com.contabilidade.s70.persistence.dao.centrocusto.CentroCusto#getS70t01cp011()
 	 */
 	@Override
-	public long getS70t01cp011() {
+	public long getId() {
 		return this.s70t01cp011;
 	}
 
@@ -65,7 +66,7 @@ class CentroCustoImpl implements Serializable, CentroCusto {
 	 * @see br.com.contabilidade.s70.persistence.dao.centrocusto.CentroCusto#getA()
 	 */
 	@Override
-	public String getA() {
+	public String isCapitaliza() {
 		return this.a;
 	}
 
@@ -73,18 +74,13 @@ class CentroCustoImpl implements Serializable, CentroCusto {
 		this.a = a;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.contabilidade.s70.persistence.dao.centrocusto.CentroCusto#getB()
-	 */
 	@Override
-	public BigDecimal getB() {
-		return this.b;
+	public Tipo getTipo() {
+		return Tipo.valueOf(this.tipoObra);
 	}
 
-	public void setB(final BigDecimal b) {
-		this.b = b;
+	public void setB(final int b) {
+		this.tipoObra = b;
 	}
 
 	/*
@@ -93,11 +89,11 @@ class CentroCustoImpl implements Serializable, CentroCusto {
 	 * @see br.com.contabilidade.s70.persistence.dao.centrocusto.CentroCusto#getS70t01cp012()
 	 */
 	@Override
-	public BigDecimal getS70t01cp012() {
+	public int getSuperintendencia() {
 		return this.s70t01cp012;
 	}
 
-	public void setS70t01cp012(final BigDecimal s70t01cp012) {
+	public void setS70t01cp012(final int s70t01cp012) {
 		this.s70t01cp012 = s70t01cp012;
 	}
 
@@ -121,7 +117,7 @@ class CentroCustoImpl implements Serializable, CentroCusto {
 	 * @see br.com.contabilidade.s70.persistence.dao.centrocusto.CentroCusto#getS70t01cp03()
 	 */
 	@Override
-	public String getS70t01cp03() {
+	public String getNomeSuperintendencia() {
 		return this.s70t01cp03;
 	}
 
@@ -155,6 +151,39 @@ class CentroCustoImpl implements Serializable, CentroCusto {
 
 	public void setS70t01cp0521(final BigDecimal s70t01cp0521) {
 		this.s70t01cp0521 = s70t01cp0521;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + (int) (this.s70t01cp011 ^ (this.s70t01cp011 >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final CentroCustoImpl other = (CentroCustoImpl) obj;
+		if (this.s70t01cp011 != other.s70t01cp011) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "CentroCustoImpl [s70t01cp011=" + this.s70t01cp011 + ", a=" + this.a + ", b=" + this.tipoObra + ", s70t01cp012=" + this.s70t01cp012
+				+ ", s70t01cp02=" + this.s70t01cp02 + ", s70t01cp03=" + this.s70t01cp03 + ", s70t01cp0511=" + this.s70t01cp0511 + ", s70t01cp0521="
+				+ this.s70t01cp0521 + "]";
 	}
 
 }

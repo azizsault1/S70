@@ -12,7 +12,7 @@ public interface CentroCustoBo {
 
 	public ReturnSaved save(final CentroCusto s70t004) throws PersistenceException, ValidateException;
 
-	public CentroCusto get(Long long1) throws PersistenceException;
+	public CentroCusto get(Long id) throws PersistenceException;
 
 	public Collection<CentroCusto> get() throws PersistenceException;
 

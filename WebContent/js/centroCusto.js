@@ -1,5 +1,5 @@
-function preencher(codigo){
-	getAjax('/centroCusto/'+codigo, '#form');
+function preencher(id){
+	getAjax('/centroCusto/'+id, '#form');
 }
 
 function listar(){
@@ -13,5 +13,14 @@ function remover(codigo){
 function save(){
 
 	alert("Save");
+}
+
+function checkType(idRadio){
+	
+	if(idRadio == 'radioObra'){
+		$('#statusObra').show();
+	} else {
+		$('#statusObra').hide();
+	}
 }
 

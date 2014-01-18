@@ -1,5 +1,6 @@
 package br.com.contabilidade.s70.resources.centrocusto;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,7 +43,7 @@ public class CentroCustoResource {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public Response get() {
-		return Response.ok(new Viewable("/centroCusto/centroCusto.jsp")).build();
+		return Response.ok(new Viewable("/centrocusto/centrocusto.jsp")).build();
 	}
 
 	private Long getId(final String id) {
@@ -120,28 +121,27 @@ public class CentroCustoResource {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("{id}")
-	public Response get(@PathParam("id") final String id) {
+	public Response getCentro(@PathParam("id") final String id) {
 
-		// final Map<String, Object> maps = new HashMap<String, Object>();
-		// final Collection<String> menssagem = new LinkedList<>();
-		//
-		// Historico historico = new HistoricoImpl();
-		//
-		// try {
-		// historico = this.bo.get(this.getId(id));
-		// } catch (final NumberFormatException e) {
-		// // Caso em que eu não faço nada, o sistema so quer um historico.
-		// } catch (final PersistenceException e) {
-		// menssagem.add(e.getMessage());
-		// maps.put(ConstResources.ERRO.name(), menssagem);
-		// } catch (final Exception e) {
-		// menssagem.add("Erro inesperado. Contate o administrador do sistema.");
-		// maps.put(ConstResources.ERRO.name(), menssagem);
-		// }
-		//
-		// maps.put(ConstResources.HISTORICO.name(), historico);
-		// return Response.ok(new Viewable("/historico/historicoForm.jsp", maps)).build();
-		return null;
+		final Map<String, Object> maps = new HashMap<String, Object>();
+		final Collection<String> menssagem = new LinkedList<>();
+
+		CentroCusto centroCusto = new CentroCustoVazio();
+
+		try {
+			centroCusto = this.bo.get(this.getId(id));
+		} catch (final NumberFormatException e) {
+			// Caso em que eu não faço nada, o sistema so quer um historico.
+		} catch (final PersistenceException e) {
+			menssagem.add(e.getMessage());
+			maps.put(ConstResources.ERRO.name(), menssagem);
+		} catch (final Exception e) {
+			menssagem.add("Erro inesperado. Contate o administrador do sistema.");
+			maps.put(ConstResources.ERRO.name(), menssagem);
+		}
+
+		maps.put(ConstResources.CENTRO_CUSTO.name(), centroCusto);
+		return Response.ok(new Viewable("/centrocusto/centrocustoForm.jsp", maps)).build();
 	}
 
 	private Collection<CentroCusto> todos() throws PersistenceException {
@@ -167,11 +167,55 @@ public class CentroCustoResource {
 			e.printStackTrace();
 			menssagem.add(ERRO_INESPERADO);
 			maps.put(ConstResources.ERRO.name(), menssagem);
-			return Response.ok(new Viewable("/historico/historicoLista.jsp", maps)).build();
+			return Response.ok(new Viewable("/centrocusto/centrocustoLista.jsp", maps)).build();
 
 		}
-		maps.put(ConstResources.HISTORICOS.name(), lista);
-		return Response.ok(new Viewable("/historico/historicoLista.jsp", maps)).build();
+		maps.put(ConstResources.CENTRO_CUSTOS.name(), lista);
+		return Response.ok(new Viewable("/centrocusto/centrocustoLista.jsp", maps)).build();
+	}
+
+	class CentroCustoVazio implements CentroCusto {
+
+		@Override
+		public long getId() {
+			return 0;
+		}
+
+		@Override
+		public String isCapitaliza() {
+			return "SIM";
+		}
+
+		@Override
+		public Tipo getTipo() {
+			return Tipo.OBRA_ANDAMENTO;
+		}
+
+		@Override
+		public int getSuperintendencia() {
+			return 0;
+		}
+
+		@Override
+		public String getS70t01cp02() {
+			return "";
+		}
+
+		@Override
+		public String getNomeSuperintendencia() {
+			return "SVC";
+		}
+
+		@Override
+		public BigDecimal getS70t01cp0511() {
+			return new BigDecimal(500);
+		}
+
+		@Override
+		public BigDecimal getS70t01cp0521() {
+			return new BigDecimal(4);
+		}
+
 	}
 
 }

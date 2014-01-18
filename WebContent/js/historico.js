@@ -1,8 +1,8 @@
-function preencherHistorico(codigo){
+function preencher(codigo){
 	getAjax('/historico/'+codigo, '#form');
 }
 
-function listarHistorico(){
+function lista(){
 	getAjax('/historico', '#list');
 }
 
@@ -18,7 +18,7 @@ function save(){
 	
 	var historico = new Historico(codigo, desc, compl);
 
-	postAjax('/historico','#form',JSON.stringify(historico), 'listarHistorico()');
+	postAjax('/historico','#form',JSON.stringify(historico), 'lista()');
 }
 
 function Historico(codigo,desc,compl){

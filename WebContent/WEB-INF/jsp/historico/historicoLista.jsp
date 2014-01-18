@@ -5,16 +5,13 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 
-<div class="panel panel-default">
-<div class="panel-body">
-
 <%
 	Map<String, Object> mps = (Map<String, Object>) request.getAttribute("it");
 	Collection<Historico> historicos = (Collection<Historico>) mps.get(ConstResources.HISTORICOS.name());
 
 	if(historicos != null && !historicos.isEmpty()){
 %>
-	<table class="table table-striped">
+	<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="dtHistoricodtHistorico" width="100%">
 		<thead>
 			<tr>
 				<th>Código</th>
@@ -38,7 +35,7 @@
 					out.print(historico.hasComplemento());
 				%></td>
 				<td>
-					<button type="button" class="btn btn-primary" onclick="preencherHistorico(<%out.print(historico.getId());%>);">Selecionar</button>
+					<button type="button" class="btn btn-primary" onclick="preencher(<%out.print(historico.getId());%>);">Selecionar</button>
 					<button type="button" class="btn btn-danger" onclick="remover(<%out.print(historico.getId());%>);">Remover</button>
 				</td>			
 			</tr>
@@ -49,11 +46,25 @@
 <%		
 	} else { 
 %>		
-		<div class="liberacao-tit">
-				<b>Não foi possível encontrar os históricos</b>
-		</div>
+	<div class="liberacao-tit">
+			<b>Não foi possível encontrar os históricos</b>
+	</div>
 <%
 	}
 %>
-</div>
-</div>
+
+<script type="text/javascript" charset="utf-8">
+		$('#dtHistoricodtHistorico').dataTable({
+	        "oLanguage": {
+	            "sLengthMenu": "Mostrar _MENU_ registros por pagina",
+	            "sZeroRecords": "Não foi encontrado nenhum registro.",
+	            "sInfo": "Mostrando _START_ de _END_ no total de _TOTAL_ registros",
+	            "sInfoEmpty": "Mostrando 0 de 0 no total de 0 registros",
+	            "sInfoFiltered": "(filtrados do total de _MAX_ registros)"
+	        },
+			"bJQueryUI": true,
+			"sPaginationType": "full_numbers"
+	    } );
+
+</script>
+

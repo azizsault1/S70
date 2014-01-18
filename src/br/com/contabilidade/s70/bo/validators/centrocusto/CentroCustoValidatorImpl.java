@@ -18,7 +18,7 @@ class CentroCustoValidatorImpl implements CentroCustoValidator {
 	public void validate(final CentroCusto centroCusto) throws ValidateException {
 		final ValidateException validator = new ValidateException();
 
-		final long id = centroCusto.getS70t01cp011();
+		final long id = centroCusto.getId();
 		if ((id <= 0) || (id > 99999)) {
 			validator.addError(FIELD_ID, ID_INVALIDO);
 		}

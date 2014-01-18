@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding//WebContent/WEB-INF/jsp/centrocusto/centroCustoForm.html=UTF-8
+encoding//WebContent/WEB-INF/jsp/centrocusto/centrocustoForm.jsp=ISO-8859-1
 encoding//WebContent/js/historico.js=UTF-8
 encoding//src/br/com/contabilidade/s70/bo/validators/centrocusto/CentroCustoValidatorImpl.java=UTF-8
 encoding//src/br/com/contabilidade/s70/bo/validators/historico/HistoricoValidatorImpl.java=UTF-8

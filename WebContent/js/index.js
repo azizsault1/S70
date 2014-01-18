@@ -5,3 +5,7 @@ function acaoBtnHistoricoPadrao(){
 function acaoBtnCentroCusto(){
 	window.location.href = homeSite +'/centroCusto/home';
 }
+
+function dataTable(){
+	window.location.href = homeSite +'/jsp/centrocusto/base.html';
+}

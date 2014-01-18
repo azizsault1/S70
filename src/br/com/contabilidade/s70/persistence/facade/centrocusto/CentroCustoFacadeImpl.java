@@ -39,7 +39,7 @@ public class CentroCustoFacadeImpl implements CentroCustoFacade {
 		this.transactional.beginTransaction();
 
 		try {
-			if (this.contains(centroCusto.getS70t01cp011())) {
+			if (this.contains(centroCusto.getId())) {
 				centroCustoSalvo = this.update(centroCusto);
 				message = HISTORICO_ALTERADO;
 			} else {

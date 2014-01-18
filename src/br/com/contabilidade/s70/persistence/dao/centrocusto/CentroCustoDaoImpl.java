@@ -15,13 +15,13 @@ import br.com.contabilidade.s70.persistence.exception.PersistenceException.TypeE
 
 class CentroCustoDaoImpl implements CentroCustoDao {
 
-	private static final String HISTORICO_REMOVER = "Não foi possível remover o histórico. Contate o administrador do sistema.";
-	private static final String HISTORICO_SALVAR = "Não foi possível gravar o histórico. Contate o administrador do sistema.";
-	private static final String HISTORICO_ALTERAR = "Não foi possível alterar o histórico. Contate o administrador do sistema.";
-	private static final String HISTORICO_CONSULTAR = "Não foi possível consultar o histórico. Contate o administrador do sistema.";
-	private static final String HISTOFICO_CONULTA_VAZIA = "Não foi possível encontrar o histórico.";
-	private static final String HISTORICO_CONSTULTA_TIMEOUT = "A consulta demorou mais do que o esperado. Contate o administrador do sistema.";
-	private static final String HISTORICO_DUPLICADO = "Já existe um histórico com este código.";
+	private static final String CENTRO_CUSTO_REMOVER = "Não foi possível remover o centro de custo. Contate o administrador do sistema.";
+	private static final String CENTRO_CUSTO_SALVAR = "Não foi possível gravar o histórico. Contate o administrador do sistema.";
+	private static final String CENTRO_CUSTO_ALTERAR = "Não foi possível alterar o histórico. Contate o administrador do sistema.";
+	private static final String CENTRO_CUSTO_CONSULTAR = "Não foi possível consultar o histórico. Contate o administrador do sistema.";
+	private static final String CENTRO_CUSTO_CONSULTA_VAZIA = "Não foi possível encontrar o histórico.";
+	private static final String CENTRO_CUSTO_CONSTULTA_TIMEOUT = "A consulta demorou mais do que o esperado. Contate o administrador do sistema.";
+	private static final String CENTRO_CUSTO_DUPLICADO = "Já existe um histórico com este código.";
 
 	private final DefaultDao<Long, CentroCustoImpl> defaultDao;
 
@@ -35,9 +35,9 @@ class CentroCustoDaoImpl implements CentroCustoDao {
 		try {
 			return this.defaultDao.save(centroCusto);
 		} catch (final ChaveDuplicadaExcpetion e) {
-			throw new PersistenceException(TypeError.CHAVE_DUPLICADA, HISTORICO_DUPLICADO, e);
+			throw new PersistenceException(TypeError.CHAVE_DUPLICADA, CENTRO_CUSTO_DUPLICADO, e);
 		} catch (final Exception e) {
-			throw new PersistenceException(TypeError.SALVAR, HISTORICO_SALVAR, e);
+			throw new PersistenceException(TypeError.SALVAR, CENTRO_CUSTO_SALVAR, e);
 		}
 
 	}
@@ -52,19 +52,19 @@ class CentroCustoDaoImpl implements CentroCustoDao {
 		try {
 			return this.defaultDao.update(centroCusto);
 		} catch (final Exception e) {
-			throw new PersistenceException(TypeError.ALTERACAO, HISTORICO_ALTERAR, e);
+			throw new PersistenceException(TypeError.ALTERACAO, CENTRO_CUSTO_ALTERAR, e);
 		}
 
 	}
 
 	@Override
-	public void delete(final Long idHistorico) throws PersistenceException {
+	public void delete(final Long idCentroCusto) throws PersistenceException {
 		try {
-			final CentroCusto historico = this.defaultDao.find(idHistorico);
+			final CentroCusto centroCusto = this.defaultDao.find(idCentroCusto);
 
-			this.defaultDao.delete(this.interfaceParaImplementacao(historico));
+			this.defaultDao.delete(this.interfaceParaImplementacao(centroCusto));
 		} catch (final Exception e) {
-			throw new PersistenceException(TypeError.REMOVE, HISTORICO_REMOVER, e);
+			throw new PersistenceException(TypeError.REMOVE, CENTRO_CUSTO_REMOVER, e);
 		}
 	}
 
@@ -76,16 +76,16 @@ class CentroCustoDaoImpl implements CentroCustoDao {
 			final CentroCusto centroCusto = this.defaultDao.find(id);
 
 			if (centroCusto == null) {
-				throw new PersistenceException(TypeError.CONSULTA_VAZIA, HISTOFICO_CONULTA_VAZIA);
+				throw new PersistenceException(TypeError.CONSULTA_VAZIA, CENTRO_CUSTO_CONSULTA_VAZIA);
 			}
 
 			return centroCusto;
 		} catch (final LockTimeoutException e) {
-			throw new PersistenceException(TypeError.CONSULTA, HISTORICO_CONSTULTA_TIMEOUT, e);
+			throw new PersistenceException(TypeError.CONSULTA, CENTRO_CUSTO_CONSTULTA_TIMEOUT, e);
 		} catch (final PersistenceException e) {
 			throw e;
 		} catch (final Exception e) {
-			throw new PersistenceException(TypeError.CONSULTA, HISTORICO_CONSULTAR, e);
+			throw new PersistenceException(TypeError.CONSULTA, CENTRO_CUSTO_CONSULTAR, e);
 		}
 	}
 
@@ -96,7 +96,7 @@ class CentroCustoDaoImpl implements CentroCustoDao {
 
 			return Collections.unmodifiableCollection(new LinkedList<CentroCusto>(centroCustos));
 		} catch (final Exception e) {
-			throw new PersistenceException(TypeError.CONSULTA, HISTORICO_CONSULTAR, e);
+			throw new PersistenceException(TypeError.CONSULTA, CENTRO_CUSTO_CONSULTAR, e);
 		}
 	}
 
