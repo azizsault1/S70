@@ -3,12 +3,10 @@
 <%@page import="com.sun.tools.xjc.reader.xmlschema.ct.ComplexTypeBindingMode"%>
 <%@page import="br.com.contabilidade.s70.persistence.beans.Historico"%>
 <%@page import="java.util.Map"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<%
-	Map<String, Object> mps = (Map<String, Object>) request.getAttribute("it");
-	Historico historico = (Historico) mps.get(ConstResources.HISTORICO.name());
-%>
+<c:set var="historico" value="${it['HISTORICO']}"/>
 
 <div class="panel panel-default">
 	<div  class="panel-heading">
@@ -21,20 +19,20 @@
 			<div class="form-group col-md-2">
 				<label for="formCodigo">Código</label> <input
 					type="number" class="form-control" id="formCodigo"
-					placeholder="Código" value="<%out.print(historico.getId());%>"
+					placeholder="Código" value="${historico.id}"
 					min="1" size="5">
 			</div>
 			<div class="form-group col-md-8" >
 				<label for="formDesc">Descrição</label> 
-				<input type="text" class="form-control" id="formDesc" placeholder="Descrição" size="20" value="<%out.print(historico.getDescricao());%>">
+				<input type="text" class="form-control" id="formDesc" placeholder="Descrição" size="20" value="${historico.descricao}">
 			</div>
 			<div class="form-group col-md-2">
 				<label for="formDesc" style="width: 100%">Complemento</label>
 					<label class="radio-inline">
-						<input id="radioSim" name="optionsRadios" type="radio" id="checkSim" value="Sim" <%out.print(historico.hasComplemento() == HistoricoComplemento.SIM? "checked": "");%> >Sim
+						<input id="radioSim" name="optionsRadios" type="radio" id="checkSim" value="Sim" <c:if test="${historico.hasComplemento() == 'SIM'}">checked</c:if> >Sim
 					</label>
 					<label class="radio-inline">
-						<input id="radioNao" name="optionsRadios" type="radio" id="checkNao" value="Nao" <%out.print(historico.hasComplemento() == HistoricoComplemento.NAO? "checked": "");%> >Não
+						<input id="radioNao" name="optionsRadios" type="radio" id="checkNao" value="Nao" <c:if test="${historico.hasComplemento() == 'NAO'}">checked</c:if> >Não
 					</label>
 			</div>
 		</div>

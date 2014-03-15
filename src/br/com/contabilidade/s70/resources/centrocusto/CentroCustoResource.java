@@ -1,6 +1,5 @@
 package br.com.contabilidade.s70.resources.centrocusto;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,8 +17,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.com.contabilidade.s70.bo.centrocusto.CentroCustoBo;
+import br.com.contabilidade.s70.bo.exceptions.ValidateException;
 import br.com.contabilidade.s70.persistence.beans.CentroCusto;
 import br.com.contabilidade.s70.persistence.exception.PersistenceException;
+import br.com.contabilidade.s70.persistence.facade.centrocusto.CentroCustoFacade.ReturnSaved;
 import br.com.contabilidade.s70.resources.ConstResources;
 
 import com.sun.jersey.api.view.Viewable;
@@ -54,39 +55,40 @@ public class CentroCustoResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_HTML)
-	public Response save() {
-		// final Map<String, Object> maps = new HashMap<String, Object>();
-		// final Collection<String> messages = new LinkedList<>();
-		//
-		// Historico hist = new HistoricoImpl();
-		//
-		// try {
-		//
-		// final ReturnSaved returned = this.bo.save(historico);
-		// messages.add(returned.getMessage());
-		// hist = returned.getHistorico();
-		// maps.put(ConstResources.SUCESSO.name(), messages);
-		//
-		// } catch (final PersistenceException e) {
-		// e.printStackTrace();
-		// messages.add(e.getMessage());
-		// maps.put(ConstResources.ERRO.name(), messages);
-		//
-		// } catch (final ValidateException e) {
-		// System.err.println("HistoricoResource.save(): " + e.getAllErrors());
-		// messages.addAll(e.getAllErrors());
-		// maps.put(ConstResources.ERRO.name(), messages);
-		//
-		// } catch (final Exception e) {
-		// System.err.println("HistoricoResource.save()" + e);
-		// messages.add(ERRO_INESPERADO);
-		// maps.put(ConstResources.ERRO.name(), messages);
-		//
-		// }
-		//
-		// maps.put(ConstResources.HISTORICO.name(), hist);
-		// return Response.ok(new Viewable("/historico/historicoForm.jsp", maps)).build();
-		return null;
+	public Response save(final CentroCustoImpl centroCusto) {
+
+		System.out.println("CentroCustoResource.save() centroCusto: " + centroCusto);
+		final Map<String, Object> maps = new HashMap<String, Object>();
+		final Collection<String> messages = new LinkedList<>();
+
+		CentroCusto ccusto = new CentroCustoImpl();
+
+		try {
+
+			final ReturnSaved returned = this.bo.save(ccusto);
+			messages.add(returned.getMessage());
+			ccusto = returned.getCentroCusto();
+			maps.put(ConstResources.SUCESSO.name(), messages);
+
+		} catch (final PersistenceException e) {
+			e.printStackTrace();
+			messages.add(e.getMessage());
+			maps.put(ConstResources.ERRO.name(), messages);
+
+		} catch (final ValidateException e) {
+			System.err.println("HistoricoResource.save(): " + e.getAllErrors());
+			messages.addAll(e.getAllErrors());
+			maps.put(ConstResources.ERRO.name(), messages);
+
+		} catch (final Exception e) {
+			System.err.println("HistoricoResource.save()" + e);
+			messages.add(ERRO_INESPERADO);
+			maps.put(ConstResources.ERRO.name(), messages);
+
+		}
+
+		maps.put(ConstResources.CENTRO_CUSTO.name(), ccusto);
+		return Response.ok(new Viewable("/centrocusto/centrocustoForm.jsp", maps)).build();
 	}
 
 	@DELETE
@@ -126,7 +128,7 @@ public class CentroCustoResource {
 		final Map<String, Object> maps = new HashMap<String, Object>();
 		final Collection<String> menssagem = new LinkedList<>();
 
-		CentroCusto centroCusto = new CentroCustoVazio();
+		CentroCusto centroCusto = new CentroCustoImpl();
 
 		try {
 			centroCusto = this.bo.get(this.getId(id));
@@ -172,50 +174,6 @@ public class CentroCustoResource {
 		}
 		maps.put(ConstResources.CENTRO_CUSTOS.name(), lista);
 		return Response.ok(new Viewable("/centrocusto/centrocustoLista.jsp", maps)).build();
-	}
-
-	class CentroCustoVazio implements CentroCusto {
-
-		@Override
-		public long getId() {
-			return 0;
-		}
-
-		@Override
-		public String isCapitaliza() {
-			return "SIM";
-		}
-
-		@Override
-		public Tipo getTipo() {
-			return Tipo.OBRA_ANDAMENTO;
-		}
-
-		@Override
-		public int getSuperintendencia() {
-			return 0;
-		}
-
-		@Override
-		public String getS70t01cp02() {
-			return "";
-		}
-
-		@Override
-		public String getNomeSuperintendencia() {
-			return "SVC";
-		}
-
-		@Override
-		public BigDecimal getS70t01cp0511() {
-			return new BigDecimal(500);
-		}
-
-		@Override
-		public BigDecimal getS70t01cp0521() {
-			return new BigDecimal(4);
-		}
-
 	}
 
 }

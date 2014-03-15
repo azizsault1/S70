@@ -108,4 +108,16 @@ public class ValidateException extends Exception {
 	public Collection<String> getAllFieldsWarning() {
 		return this.getFields(this.warnings);
 	}
+
+	@Override
+	public String getMessage() {
+		final StringBuilder str = new StringBuilder();
+		for (final String message : this.getAllErrors()) {
+			str.append(message);
+			str.append(System.getProperty("line.separator"));
+		}
+
+		return str.toString();
+	}
+
 }

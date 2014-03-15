@@ -13,7 +13,7 @@ public interface CentroCustoDao {
 
 	class Factory {
 		public static CentroCustoDao createDao(final EntityManager em) {
-			final DefaultDao<Long, CentroCustoImpl> defaultDao = new DefaultDaoImpl<>(em, CentroCustoImpl.class);
+			final DefaultDao<Long, S70t001> defaultDao = new DefaultDaoImpl<>(em, S70t001.class);
 			return new CentroCustoDaoImpl(defaultDao);
 		}
 	}

@@ -5,13 +5,15 @@ import java.math.BigDecimal;
 public interface CentroCusto {
 
 	public enum Tipo {
-		ESCRITORIO_SUPERINTENDENCIA("Escrit. e Superint."), OBRA_ANDAMENTO("Obra em andamento"), CONTROLE_INTERNO("Controle Interno"), OBRA_ENCERRADA(
-				"Obra encerrada");
+		ESCRITORIO_SUPERINTENDENCIA("Escrit. e Superint.", 1), OBRA_ANDAMENTO("Obra em andamento", 2), CONTROLE_INTERNO("Controle Interno", 3), OBRA_ENCERRADA(
+				"Obra encerrada", 9);
 
 		private final String label;
+		private final int value;
 
-		private Tipo(final String label) {
+		private Tipo(final String label, final int value) {
 			this.label = label;
+			this.value = value;
 
 		}
 
@@ -39,22 +41,26 @@ public interface CentroCusto {
 				return OBRA_ENCERRADA;
 			}
 		}
+
+		public int getValue() {
+			return value;
+		}
 	}
 
-	public abstract long getId();
+	public long getCodigo();
 
-	public abstract String isCapitaliza();
+	public Tipo getTipo();
 
-	public abstract Tipo getTipo();
+	public BigDecimal getTaxa();
 
-	public abstract int getSuperintendencia();
+	public String getNome();
 
-	public abstract String getS70t01cp02();
+	public Superintendencia getSuperintendencia();
 
-	public abstract String getNomeSuperintendencia();
+	public interface Superintendencia {
+		public int getCodigo();
 
-	public abstract BigDecimal getS70t01cp0511();
-
-	public abstract BigDecimal getS70t01cp0521();
+		public String getNome();
+	}
 
 }

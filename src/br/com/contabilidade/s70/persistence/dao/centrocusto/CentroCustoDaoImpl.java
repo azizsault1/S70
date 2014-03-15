@@ -23,17 +23,18 @@ class CentroCustoDaoImpl implements CentroCustoDao {
 	private static final String CENTRO_CUSTO_CONSTULTA_TIMEOUT = "A consulta demorou mais do que o esperado. Contate o administrador do sistema.";
 	private static final String CENTRO_CUSTO_DUPLICADO = "Já existe um histórico com este código.";
 
-	private final DefaultDao<Long, CentroCustoImpl> defaultDao;
+	private final DefaultDao<Long, S70t001> defaultDao;
 
-	public CentroCustoDaoImpl(final DefaultDao<Long, CentroCustoImpl> defaultDao) {
+	public CentroCustoDaoImpl(final DefaultDao<Long, S70t001> defaultDao) {
 		this.defaultDao = defaultDao;
 	}
 
 	@Override
 	public CentroCusto save(final CentroCusto entity) throws PersistenceException {
-		final CentroCustoImpl centroCusto = this.interfaceParaImplementacao(entity);
+		final S70t001 centroCusto = this.interfaceParaImplementacao(entity);
 		try {
-			return this.defaultDao.save(centroCusto);
+			final S70t001 s70 = this.defaultDao.save(centroCusto);
+			return this.implementacaoParaInterface(s70);
 		} catch (final ChaveDuplicadaExcpetion e) {
 			throw new PersistenceException(TypeError.CHAVE_DUPLICADA, CENTRO_CUSTO_DUPLICADO, e);
 		} catch (final Exception e) {
@@ -42,15 +43,20 @@ class CentroCustoDaoImpl implements CentroCustoDao {
 
 	}
 
-	private CentroCustoImpl interfaceParaImplementacao(final CentroCusto e) {
-		return null;
+	private S70t001 interfaceParaImplementacao(final CentroCusto c) {
+		return new S70t001(c);
+	}
+
+	private CentroCusto implementacaoParaInterface(final S70t001 s70t001) {
+		return new CentroCustoImpl(s70t001);
 	}
 
 	@Override
 	public CentroCusto update(final CentroCusto entity) throws PersistenceException {
-		final CentroCustoImpl centroCusto = this.interfaceParaImplementacao(entity);
+		final S70t001 centroCusto = this.interfaceParaImplementacao(entity);
 		try {
-			return this.defaultDao.update(centroCusto);
+			final S70t001 s70 = this.defaultDao.update(centroCusto);
+			return this.implementacaoParaInterface(s70);
 		} catch (final Exception e) {
 			throw new PersistenceException(TypeError.ALTERACAO, CENTRO_CUSTO_ALTERAR, e);
 		}
@@ -60,9 +66,9 @@ class CentroCustoDaoImpl implements CentroCustoDao {
 	@Override
 	public void delete(final Long idCentroCusto) throws PersistenceException {
 		try {
-			final CentroCusto centroCusto = this.defaultDao.find(idCentroCusto);
+			final S70t001 s70 = this.defaultDao.find(idCentroCusto);
 
-			this.defaultDao.delete(this.interfaceParaImplementacao(centroCusto));
+			this.defaultDao.delete(s70);
 		} catch (final Exception e) {
 			throw new PersistenceException(TypeError.REMOVE, CENTRO_CUSTO_REMOVER, e);
 		}
@@ -73,13 +79,13 @@ class CentroCustoDaoImpl implements CentroCustoDao {
 
 		try {
 
-			final CentroCusto centroCusto = this.defaultDao.find(id);
+			final S70t001 s70 = this.defaultDao.find(id);
 
-			if (centroCusto == null) {
+			if (s70 == null) {
 				throw new PersistenceException(TypeError.CONSULTA_VAZIA, CENTRO_CUSTO_CONSULTA_VAZIA);
 			}
 
-			return centroCusto;
+			return this.implementacaoParaInterface(s70);
 		} catch (final LockTimeoutException e) {
 			throw new PersistenceException(TypeError.CONSULTA, CENTRO_CUSTO_CONSTULTA_TIMEOUT, e);
 		} catch (final PersistenceException e) {
@@ -92,9 +98,14 @@ class CentroCustoDaoImpl implements CentroCustoDao {
 	@Override
 	public Collection<CentroCusto> getAll() throws PersistenceException {
 		try {
-			final List<CentroCustoImpl> centroCustos = this.defaultDao.findManyResults("CentroCusto.findAll");
+			final List<S70t001> s70s = this.defaultDao.findManyResults("CentroCusto.findAll");
+			final List<CentroCusto> centroCustos = new LinkedList<>();
 
-			return Collections.unmodifiableCollection(new LinkedList<CentroCusto>(centroCustos));
+			for (final S70t001 s70t001 : s70s) {
+				centroCustos.add(this.implementacaoParaInterface(s70t001));
+			}
+
+			return Collections.unmodifiableCollection(centroCustos);
 		} catch (final Exception e) {
 			throw new PersistenceException(TypeError.CONSULTA, CENTRO_CUSTO_CONSULTAR, e);
 		}
@@ -104,7 +115,8 @@ class CentroCustoDaoImpl implements CentroCustoDao {
 	public boolean contais(final long id) {
 
 		try {
-			final CentroCusto result = this.defaultDao.find(id);
+			final S70t001 result = this.defaultDao.find(id);
+
 			if (result != null) {
 				return Boolean.TRUE;
 			}
