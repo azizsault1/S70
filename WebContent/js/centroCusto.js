@@ -23,8 +23,6 @@ function save(){
 		status = $("input:checked[name=optionsObra]").val();
 	}
 	
-	alert("taxa: "+taxa + " status: "+ status );
-	
 	var centroCusto = new CentroCusto(codigo, nome, tipo, taxa, status);
 	
 	postAjax('/centroCusto','#form',JSON.stringify(centroCusto), 'listar()');

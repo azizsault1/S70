@@ -61,7 +61,7 @@ public class CentroCustoResource {
 		final Map<String, Object> maps = new HashMap<String, Object>();
 		final Collection<String> messages = new LinkedList<>();
 
-		CentroCusto ccusto = new CentroCustoImpl();
+		CentroCusto ccusto = centroCusto == null ? new CentroCustoImpl() : centroCusto;
 
 		try {
 
@@ -95,28 +95,28 @@ public class CentroCustoResource {
 	@Produces(MediaType.TEXT_HTML)
 	@Path("{id}")
 	public Response remove(@PathParam("id") final String id) {
+		System.out.println("CentroCustoResource.remove() " + id);
+		final Map<String, Object> maps = new HashMap<String, Object>();
 
-		// final Map<String, Object> maps = new HashMap<String, Object>();
-		// final Collection<String> menssagem = new LinkedList<>();
-		//
-		// try {
-		// final Long idHistorico = this.getId(id);
-		// this.bo.delete(idHistorico);
-		//
-		// } catch (final PersistenceException e) {
-		// e.printStackTrace();
-		// menssagem.add(e.getMessage());
-		// maps.put(ConstResources.ERRO.name(), menssagem);
-		//
-		// } catch (final Exception e) {
-		// e.printStackTrace();
-		// menssagem.add(ERRO_INESPERADO);
-		// maps.put(ConstResources.ERRO.name(), menssagem);
-		//
-		// }
-		//
-		// return Response.ok(new Viewable("/historico/historico.jsp", maps)).build();
-		return null;
+		final Collection<String> menssagem = new LinkedList<>();
+
+		try {
+			final Long idCentroCusto = this.getId(id);
+			this.bo.delete(idCentroCusto);
+
+		} catch (final PersistenceException e) {
+			e.printStackTrace();
+			menssagem.add(e.getMessage());
+			maps.put(ConstResources.ERRO.name(), menssagem);
+
+		} catch (final Exception e) {
+			e.printStackTrace();
+			menssagem.add(ERRO_INESPERADO);
+			maps.put(ConstResources.ERRO.name(), menssagem);
+
+		}
+
+		return Response.ok(new Viewable("/historico/historico.jsp", maps)).build();
 
 	}
 
