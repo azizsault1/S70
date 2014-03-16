@@ -12,6 +12,7 @@
 	<div class="panel-body">
 		<form>
 			<div class="row">
+				<jsp:include page="../message.jsp" />
 				<div class="col-md-2">
 					<div class="form-group">
 						<label for="text">Centro de Custo</label>

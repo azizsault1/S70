@@ -4,63 +4,43 @@
 <%@page import="com.sun.corba.se.impl.orbutil.closure.Constant"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
-<%
-	if (request != null && request.getAttribute("it") != null) {
-		Map<String, Object> mps = (Map<String, Object>) request.getAttribute("it");
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-		if (mps.containsKey(ConstResources.ERRO.name())) {
-			Collection<String> erros = (Collection<String>) mps.get(ConstResources.ERRO.name());
-%>	
-	<div id="row">
-		<div class="col-md-12 alert alert-danger" <%out.print(erros.isEmpty()? "hidden" : "");%> >
-		
-<%
-			for (String erro : erros) {
-%>
-					<p><%out.print(erro); %></p>
-<%
-			}
-%>
+<c:if test="${it != null}">
+	<c:if test="${it['ERRO'] != null}">
+		<c:set var="erros" value="${it['ERRO']}"/>
+		<div id="row">
+			<div class="col-md-12 alert alert-danger"  <c:if test="${erros.isEmpty()}">hidden</c:if>>
+				<c:forEach var="erro" items="${erros}">
+					<c:out value="${erro}" />
+					<br>
+				</c:forEach>
+			</div>
 		</div>
-	</div>
-<%
-		} 
-
-		if(mps.containsKey(ConstResources.CUIDADO.name())){
-			Collection<String> cuidados = (Collection<String>) mps.get(ConstResources.CUIDADO.name());
+	</c:if>
 	
-%>	
-	<div id="row">
-		<div class="col-md-12 alert alert-warning" <%out.print(cuidados.isEmpty()? "hidden" : "");%> >
-		
-<%
-				for(String cuidado : cuidados){%>
-					<p><%out.print(cuidado); %></p>
-<% 	
-				}
-%>
+	<c:if test="${it['CUIDADO'] != null}">
+		<c:set var="cuidados" value="${it['CUIDADO']}"/>
+		<div id="row">
+			<div class="col-md-12 alert alert-warning"  <c:if test="${cuidados.isEmpty()}">hidden</c:if>>
+				<c:forEach var="cuidado" items="${cuidados}">
+					<c:out value="${cuidado}" />
+					<br>
+				</c:forEach>
+			</div>
 		</div>
-	</div>
-<%
-		} 
+	</c:if>
 	
-		if (mps.containsKey(ConstResources.SUCESSO.name())) {
-			Collection<String> sucessos = (Collection<String>) mps.get(ConstResources.SUCESSO.name());
-%>		
-	<div id="row">
-		<div class="col-md-12 alert alert-success" <%out.print(sucessos.isEmpty()? "hidden" : "");%> >
-		
-<%
-				for(String sucesso : sucessos){%>
-					<p><%out.print(sucesso); %></p>
-<% 	
-				}
-%>
+		<c:if test="${it['SUCESSO'] != null}">
+		<c:set var="sucessos" value="${it['SUCESSO']}"/>
+		<div id="row">
+			<div class="col-md-12 alert alert-success"  <c:if test="${sucessos.isEmpty()}">hidden</c:if>>
+				<c:forEach var="sucesso" items="${sucessos}">
+					<c:out value="${sucesso}" />
+					<br>
+				</c:forEach>
+			</div>
 		</div>
-	</div>
-<%
-		} 
-	}
-%>
-
-
+	</c:if>
+	
+</c:if>
